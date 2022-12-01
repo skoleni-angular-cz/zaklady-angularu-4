@@ -1,0 +1,24 @@
+<h1>Main Page</h1>
+
+<div class="row my-5">
+  <div *ngFor="let product of (products$ | async)" class="col-3 px-2 pb-3">
+    <div class="card px-0 w-full">
+      <img class="card-img-top" [src]="product.image" alt="some image">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">
+          $ {{ product.price }}
+          <span *ngIf="product.discounted" class="text-danger">Discounted</span>
+        </p>
+      </div>
+      <div class="card-body">
+        <a
+          href="#" class="card-link"
+          (click)="$event.preventDefault(); openProduct(product)"
+        >
+          Open product
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
