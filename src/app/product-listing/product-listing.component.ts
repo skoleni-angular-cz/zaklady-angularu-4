@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, of, Subscription } from 'rxjs';
 import { ApiProductsService, ProductDto } from '../api-products.service';
 
 @Component({
@@ -11,16 +12,26 @@ export class ProductListingComponent implements OnInit, OnDestroy {
 
   products$: Observable<ProductDto[]> = of([]);
 
+  private paramsSubscription: Subscription | undefined;
+
   constructor(
+    private activatedRoute: ActivatedRoute,
     private apiProductsService: ApiProductsService,
   ) {}
 
   ngOnInit(): void {
-    this.loadAllProducts();
+    this.paramsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
+      if (queryParams.discounted === 'true') {
+        this.loadDiscountedProducts();
+      }
+      else {
+        this.loadAllProducts();
+      }
+    });
   }
 
   ngOnDestroy(): void {
-    
+    this.paramsSubscription?.unsubscribe();
   }
 
   loadAllProducts() {
