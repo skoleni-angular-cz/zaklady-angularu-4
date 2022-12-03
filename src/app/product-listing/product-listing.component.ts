@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, Subscription } from 'rxjs';
 import { ApiProductsService, ProductDto } from '../api-products.service';
 
@@ -15,6 +15,7 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   private paramsSubscription: Subscription | undefined;
 
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private apiProductsService: ApiProductsService,
   ) {}
@@ -43,7 +44,7 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   }
 
   openProduct(product: ProductDto) {
-    // todo implement
+    this.router.navigate(['products', product.id]);
   }
 
 }
