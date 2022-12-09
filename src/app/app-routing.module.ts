@@ -1,8 +1,27 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
+import {NotFoundPageComponent} from "./not-found-page/not-found-page.component";
+import {ProductListingComponent} from "./product-listing/product-listing.component";
+import {ProductPageComponent} from "./product-page/product-page.component";
 
 const routes: Route[] = [
-  // todo
+  {
+    path: '',
+    redirectTo: '/products',
+    pathMatch: 'full',
+  },
+  {
+    path: 'products',
+    component: ProductListingComponent,
+  },
+  {
+    path: 'products/:productId',
+    component: ProductPageComponent,
+  },
+  {
+    path: '**',
+    component: NotFoundPageComponent,
+  }
 ];
 
 @NgModule({
